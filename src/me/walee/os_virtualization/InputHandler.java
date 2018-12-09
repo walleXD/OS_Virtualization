@@ -3,18 +3,36 @@ package me.walee.os_virtualization;
 import java.util.Scanner;
 
 public class InputHandler {
-    private Boolean initiated = false;
+    private Boolean initiated;
+    private OS virtualOS;
     private Scanner reader = new Scanner(System.in);
 
-    public void start() {
+    public InputHandler() {
         initiated = true;
 
+        // get ram size
+        System.out.print("RAM Size (in bytes): ");
+        Integer ramSize = Integer.parseInt(reader.nextLine());
+
+        // get disk count
+        System.out.print("Number of disks: ");
+        Integer diskCount = Integer.parseInt(reader.nextLine());
+
+        virtualOS = new OS(ramSize, diskCount);
+    }
+
+    public void start() {
         while(initiated) getInput();
     }
 
     private void getInput() {
+        String input;
         System.out.print("> ");
-        handleCommand(reader.nextLine().split(" "));
+
+        input = reader.nextLine();
+
+        handleCommand(input.split(" "));
+
     }
 
     private void handleCommand(String[] input) {
