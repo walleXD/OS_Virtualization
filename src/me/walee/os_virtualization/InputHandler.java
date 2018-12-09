@@ -25,7 +25,10 @@ public class InputHandler {
         }
     }
 
-    private void helpCommand() {}
+    private void helpCommand() {
+        System.out.println("help: Lists all available commands");
+        System.out.println("exit: Exits Virtualization");
+    }
 
     private void exitCommand() {
         reader.close();
