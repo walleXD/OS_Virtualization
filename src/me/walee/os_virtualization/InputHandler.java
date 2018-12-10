@@ -39,6 +39,7 @@ public class InputHandler {
         switch (input[0]) {
             case "help": helpCommand(); break;
             case "exit": exitCommand(); break;
+            case "A": createProcessCommand(input); break;
             default: unknownCommand(); break;
         }
     }
@@ -56,5 +57,17 @@ public class InputHandler {
     private void unknownCommand() {
         System.out.println("Unknown Command");
         System.out.println("Please run help to see all available commands");
+    }
+
+    private void createProcessCommand(String[] input) {
+        Integer priority = Integer.parseInt(input[1]);
+        Integer memSize = Integer.parseInt(input[2]);
+
+        // TODO: add try/catch block for failures
+        Process newProcess = virtualOS.createProcess(memSize, priority);
+        System.out.println(
+                "Spawned new Process with PID: " + newProcess.getPid()
+                        + " RAM: " + newProcess.getRamSize()
+                        + " Priority " + newProcess.getPriority());
     }
 }
