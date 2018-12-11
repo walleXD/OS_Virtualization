@@ -4,9 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class OS {
-    private Integer ramSize;
     private Integer diskCount;
     private Integer lastPID = 0;
+    private Memory ram;
 
     public Map<Integer, PCB> getProcessTable() {
         return processTable;
@@ -14,9 +14,9 @@ public class OS {
 
     private Map<Integer, PCB> processTable = new HashMap<>();
 
-    public OS(Integer ram, Integer disk) {
-        this.ramSize = ram;
+    public OS(Integer ramSize, Integer disk) {
         this.diskCount = disk;
+        this.ram = new Memory(ramSize);
         // TODO: Add memory creation
         // TODO: Add disk creation
         // TODO: Add CPU with active process slot
