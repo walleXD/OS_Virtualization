@@ -1,12 +1,18 @@
 package me.walee.os_virtualization;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class OS {
     private Integer ramSize;
     private Integer diskCount;
     private Integer lastPID = 0;
-    private Map<Integer, PCB> processTable;
+
+    public Map<Integer, PCB> getProcessTable() {
+        return processTable;
+    }
+
+    private Map<Integer, PCB> processTable = new HashMap<>();
 
     public OS(Integer ram, Integer disk) {
         this.ramSize = ram;

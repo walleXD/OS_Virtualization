@@ -1,6 +1,8 @@
 package me.walee.os_virtualization;
 
 import java.util.Scanner;
+import java.util.stream.Collectors;
+import java.util.Set;
 
 public class InputHandler {
     private Boolean initiated;
@@ -43,9 +45,9 @@ public class InputHandler {
             case "t": terminateCurrentProcessCommand(input); break;
             case "d": requestDiskReadCommand(input); break;
             case "D": completeDiskActivityCommand(input); break;
-            case "Sr": displayRunningProcessCommand(input); break;
-            case "Si": displayProcessDiskUsageCommand(input); break;
-            case "Sm": displayMemoryCommand(input); break;
+            case "Sr": displayRunningProcessCommand(); break;
+            case "Si": displayProcessDiskUsageCommand(); break;
+            case "Sm": displayMemoryCommand(); break;
             default: unknownCommand(); break;
         }
     }
@@ -91,6 +93,21 @@ public class InputHandler {
     private void completeDiskActivityCommand(String[] input) {}
 
     private void displayRunningProcessCommand() {
+        Set<PCB> allProcessPCB = virtualOS
+                .getProcessTable()
+                .entrySet()
+                .stream()
+                .map(e -> e.getValue())
+                .filter(e -> e.getState() == "RUNNING" || e.getState() == "READY")
+                .collect(Collectors.toSet());
+
+        System.out.println("  PID  |  PRIORITY  |");
+
+        for(PCB pcb : allProcessPCB) {
+            System.out.print(pcb.getState() == "RUNNING" ? "> " : "  ");
+            System.out.println(pcb.getPid() + "    |  " + pcb.getPriority() + "  |");
+        }
+    }
 
     private void displayProcessDiskUsageCommand() {}
 
