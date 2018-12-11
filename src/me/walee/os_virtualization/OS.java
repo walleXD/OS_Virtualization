@@ -6,12 +6,15 @@ public class OS {
     private Integer ramSize;
     private Integer diskCount;
     private Integer lastPID = 0;
-    private List<Process> readyQueue;
-    private Process activeProcess;
 
     public OS(Integer ram, Integer disk) {
         ramSize = ram;
         diskCount = disk;
+        // TODO: Add memory creation
+        // TODO: Add disk creation
+        // TODO: Add CPU with active process slot
+        // TODO: Add Ready Queue
+        // TODO: Add I/O Queue in each disk
     }
 
     public Process createProcess(Integer priority, Integer memSize) {
