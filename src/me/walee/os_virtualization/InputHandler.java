@@ -90,9 +90,9 @@ public class InputHandler {
 
     private void completeDiskActivityCommand(String[] input) {}
 
-    private void displayRunningProcessCommand(String[] input) {}
+    private void displayRunningProcessCommand() {
 
-    private void displayProcessDiskUsageCommand(String[] input) {}
+    private void displayProcessDiskUsageCommand() {}
 
-    private void displayMemoryCommand(String[] input) {}
+    private void displayMemoryCommand() {}
 }
