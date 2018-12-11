@@ -79,9 +79,9 @@ public class InputHandler {
         // TODO: add try/catch block for failures
         Process newProcess = virtualOS.createProcess(memSize, priority);
         System.out.println(
-                "Spawned new Process with PID: " + newProcess.getPid()
-                        + " RAM: " + newProcess.getRamSize()
-                        + " Priority " + newProcess.getPriority());
+                "Spawned new Process with PID: " + newProcess.getPcb().getPid()
+                        + " RAM: " + newProcess.getPcb().getRam()
+                        + " Priority " + newProcess.getPcb().getPriority());
     }
 
     private void terminateCurrentProcessCommand(String[] input) {}
