@@ -40,11 +40,24 @@ public class InputHandler {
             case "help": helpCommand(); break;
             case "exit": exitCommand(); break;
             case "A": createProcessCommand(input); break;
+            case "t": terminateCurrentProcessCommand(input); break;
+            case "d": requestDiskReadCommand(input); break;
+            case "D": completeDiskActivityCommand(input); break;
+            case "Sr": displayRunningProcessCommand(input); break;
+            case "Si": displayProcessDiskUsageCommand(input); break;
+            case "Sm": displayMemoryCommand(input); break;
             default: unknownCommand(); break;
         }
     }
 
     private void helpCommand() {
+        System.out.println("A: Spawn new process - A Priority RAM");
+        System.out.println("t: Terminate currently running process");
+        System.out.println("d: Currently running process added to I/O queue from given disk to load given file - d number file_name");
+        System.out.println("D: The hard disk #number has finished the work for one process - D number");
+        System.out.println("Sr: Shows a process currently using the CPU and processes waiting in the ready-queue");
+        System.out.println("Si: Shows what processes are currently using the hard disks and what processes are waiting to use them");
+        System.out.println("Sm: Shows the state of memory");
         System.out.println("help: Lists all available commands");
         System.out.println("exit: Exits Virtualization");
     }
@@ -70,4 +83,16 @@ public class InputHandler {
                         + " RAM: " + newProcess.getRamSize()
                         + " Priority " + newProcess.getPriority());
     }
+
+    private void terminateCurrentProcessCommand(String[] input) {}
+
+    private void requestDiskReadCommand(String[] input) {}
+
+    private void completeDiskActivityCommand(String[] input) {}
+
+    private void displayRunningProcessCommand(String[] input) {}
+
+    private void displayProcessDiskUsageCommand(String[] input) {}
+
+    private void displayMemoryCommand(String[] input) {}
 }
