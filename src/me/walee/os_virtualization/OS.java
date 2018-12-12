@@ -6,6 +6,11 @@ import java.util.Map;
 public class OS {
     private Integer diskCount;
     private Integer lastPID = 0;
+
+    public Memory getRam() {
+        return ram;
+    }
+
     private Memory ram;
 
     public Map<Integer, PCB> getProcessTable() {

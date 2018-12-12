@@ -5,9 +5,14 @@ import java.util.List;
 
 // Memory: your program should simulate contiguous memory management with “best fit” approach.
 public class Memory {
-    private class MemoryBlock {
+     class MemoryBlock {
         private Integer blockSize;
-        private Integer content = null;
+
+         public Integer getContent() {
+             return content;
+         }
+
+         private Integer content = null;
 
         public MemoryBlock(Integer memSize) {
             blockSize = memSize;
@@ -21,6 +26,10 @@ public class Memory {
         public Boolean isEmpty() { return content == null; }
 
         public Integer size() { return blockSize; }
+    }
+
+    public List<MemoryBlock> getRawRam() {
+        return ram;
     }
 
     private List<MemoryBlock> ram = new ArrayList<>();

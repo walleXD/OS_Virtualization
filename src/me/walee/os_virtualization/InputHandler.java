@@ -3,6 +3,7 @@ package me.walee.os_virtualization;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 import java.util.Set;
+import java.util.List;
 
 public class InputHandler {
     private Boolean initiated;
@@ -112,5 +113,31 @@ public class InputHandler {
 
     private void displayProcessDiskUsageCommand() {}
 
-    private void displayMemoryCommand() {}
+    private void displayMemoryCommand() {
+        List<Memory.MemoryBlock> ram = virtualOS.getRam().getRawRam();
+
+        int prevBlockAddress = 0;
+        int blockIndex = 0;
+        for(Memory.MemoryBlock block : ram) {
+            Integer processPid = block.getContent();
+            if (processPid != null) {
+                System.out.println(
+                        blockIndex + "  |  "
+                                + processPid + "  |  "
+                                + prevBlockAddress + " - "
+                                + (prevBlockAddress + block.size())
+                );
+            } else {
+                System.out.println(
+                        blockIndex + "  |  "
+                                + 0 + "  |  "
+                                + prevBlockAddress + " - "
+                                + (prevBlockAddress + block.size())
+                );
+            }
+
+            prevBlockAddress += block.size() + 1;
+            blockIndex += 1;
+        }
+    }
 }
