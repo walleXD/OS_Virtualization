@@ -79,7 +79,7 @@ public class InputHandler {
         Integer memSize = Integer.parseInt(input[2]);
 
         // TODO: add try/catch block for failures
-        Process newProcess = virtualOS.createProcess(memSize, priority);
+        Process newProcess = virtualOS.createProcess(priority, memSize);
         System.out.println(
                 "Spawned new Process with PID: " + newProcess.getPcb().getPid()
                         + " RAM: " + newProcess.getPcb().getRam()
@@ -101,11 +101,12 @@ public class InputHandler {
                 .filter(e -> e.getState() == "RUNNING" || e.getState() == "READY")
                 .collect(Collectors.toSet());
 
-        System.out.println("  PID  |  PRIORITY  |");
+        System.out.println("  PID  |  PRIORITY  ");
+        System.out.println("-------|------------");
 
         for(PCB pcb : allProcessPCB) {
             System.out.print(pcb.getState() == "RUNNING" ? "> " : "  ");
-            System.out.println(pcb.getPid() + "    |  " + pcb.getPriority() + "  |");
+            System.out.println(pcb.getPid() + "    |  " + pcb.getPriority());
         }
     }
 

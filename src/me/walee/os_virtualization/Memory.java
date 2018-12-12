@@ -1,5 +1,6 @@
 package me.walee.os_virtualization;
 
+import java.util.ArrayList;
 import java.util.List;
 
 // Memory: your program should simulate contiguous memory management with “best fit” approach.
@@ -17,12 +18,12 @@ public class Memory {
             this.content = content;
         }
 
-        public Boolean isEmpty() { return content == null ? true : false; }
+        public Boolean isEmpty() { return content == null; }
 
         public Integer size() { return blockSize; }
     }
 
-    private List<MemoryBlock> ram;
+    private List<MemoryBlock> ram = new ArrayList<>();
     private Integer memSize;
 
     public Memory(Integer memSize) {

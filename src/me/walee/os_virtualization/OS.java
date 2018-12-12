@@ -25,7 +25,7 @@ public class OS {
 
     public Process createProcess(Integer priority, Integer memSize) {
         PCB newPCB = new PCB(getNewPID(), "NEW", memSize, priority);
-        this.processTable.put(newPCB.getPid(), newPCB);
+        processTable.put(newPCB.getPid(), newPCB);
         Process newProcess = new Process(newPCB);
 
         addProcessToMem(newProcess);
