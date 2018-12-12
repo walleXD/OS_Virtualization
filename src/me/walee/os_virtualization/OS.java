@@ -17,7 +17,6 @@ public class OS {
     public OS(Integer ramSize, Integer disk) {
         this.diskCount = disk;
         this.ram = new Memory(ramSize);
-        // TODO: Add memory creation
         // TODO: Add disk creation
         // TODO: Add CPU with active process slot
         // TODO: Add Ready Queue
@@ -41,7 +40,9 @@ public class OS {
 
     private void reevalauteReadyQueue() {}
 
-    private void addProcessToMem(Process process) {}
+    private void addProcessToMem(Process process) {
+        ram.addProcess(process);
+    }
 
     private Integer getNewPID() {
         lastPID += 1;
