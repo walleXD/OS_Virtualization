@@ -2,6 +2,8 @@ package me.walee.os_virtualization;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 public class OS {
     private Integer diskCount;
@@ -18,6 +20,9 @@ public class OS {
     }
 
     private Map<Integer, PCB> processTable = new HashMap<>();
+
+    private List<Disk> allDisks = new ArrayList<Disk>();
+
 
     public OS(Integer ramSize, Integer disk) {
         this.diskCount = disk;
@@ -52,5 +57,11 @@ public class OS {
     private Integer getNewPID() {
         lastPID += 1;
         return lastPID;
+    }
+
+    private void createAllDisks(Integer diskCount) {
+        for(int i = 0; i<diskCount; i++) {
+            allDisks.add(new Disk(i));
+        }
     }
 }
