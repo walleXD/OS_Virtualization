@@ -40,16 +40,28 @@ public class Memory {
     }
 
     private void addMemBlockToMem(MemoryBlock block) {
-//        TODO: Implement Best Fit algorithm to add process to mem
-//        int i = 0;
-//        for(MemoryBlock b : ram) {
-//            if (b.size() > block.size() && b.isEmpty()) {
-//                int emptyBlockSize = b.size() - block.size();
-//                if (emptyBlockSize > 0) {
-//                    MemoryBlock newEmptyBlock = new MemoryBlock(emptyBlockSize);
-//                }
-//            }
-//            i+=1;
-//        }
+//        TODO: Handle case for when there isn't any block available
+        int bestMemBlockIndex = 0;
+
+        for(int i = 0; i < ram.size(); i++) {
+            MemoryBlock b = ram.get(i);
+            if (
+                    b.size() > block.size()
+                            && b.isEmpty()
+                            && b.size() > ram.get(bestMemBlockIndex).size()) {
+                bestMemBlockIndex = i;
+            }
+        }
+
+        int emptyBlockSize = ram.get(bestMemBlockIndex).size() - block.size();
+        ram.remove(bestMemBlockIndex);
+        if (emptyBlockSize > 0) {
+            ArrayList<MemoryBlock> newBlocks = new ArrayList<>();
+            newBlocks.add(block);
+            newBlocks.add(new MemoryBlock(emptyBlockSize));
+            ram.addAll(bestMemBlockIndex, newBlocks);
+        } else {
+            ram.add(bestMemBlockIndex, block);
+        }
     }
 }
