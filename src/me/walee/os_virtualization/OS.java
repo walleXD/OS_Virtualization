@@ -7,19 +7,13 @@ import java.util.List;
 import java.lang.RuntimeException;
 
 public class OS {
-    private Integer lastPID = 0;
-
-    public Memory getRam() {
-        return ram;
-    }
-
-    private Memory ram;
-
     public Map<Integer, PCB> getProcessTable() {
         return processTable;
     }
 
-    private Map<Integer, PCB> processTable = new HashMap<>();
+    public Memory getRam() {
+        return ram;
+    }
 
     public Disk getDisk(int id) {
         for(Disk d : allDisks) {
@@ -27,11 +21,7 @@ public class OS {
         }
 
         throw new RuntimeException("No Disk with id " + id + " found.");
-    };
-
-    private List<Disk> allDisks = new ArrayList<>();
-    private List<Integer> readyQueue = new ArrayList<>();
-
+    }
 
     public OS(Integer ramSize, Integer disk) {
         this.ram = new Memory(ramSize);
@@ -59,7 +49,14 @@ public class OS {
         reevalauteReadyQueue();
     }
 
+
+    private Integer lastPID = 0;
     private CPU cpu = new CPU();
+    private Map<Integer, PCB> processTable = new HashMap<>();
+    private Memory ram;
+    private List<Disk> allDisks = new ArrayList<>();
+    private List<Integer> readyQueue = new ArrayList<>();
+
     private void moveProcessFromReadyQueueToDiskQueue(int pid, int diskId) {}
 
     private void reevalauteReadyQueue() {}
