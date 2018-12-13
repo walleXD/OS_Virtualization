@@ -37,16 +37,25 @@ public class OS {
         Process newProcess = new Process(newPCB);
 
         addProcessToMem(newProcess);
-        addProcessToReadyQueue(newProcess.getPcb().getPid());
 
         newProcess.getPcb().setState("READY");
+        addProcessToReadyQueue(newProcess.getPcb().getPid());
+
+        reevalauteReadyQueue();
 
         return newProcess;
     }
 
     public void addProcessToReadyQueue(int pid) {
-        readyQueue.add(pid);
-        reevalauteReadyQueue();
+        int activePid = cpu.getActivePid();
+
+        if(activePid >= 0) {
+            readyQueue.add(pid);
+            reevalauteReadyQueue();
+        } else {
+            cpu.setActivePid(pid);
+            processTable.get(pid).setState("RUNNING");
+        }
     }
 
     public void terminateCurrentProccess() {
@@ -65,8 +74,32 @@ public class OS {
 
     private void moveProcessFromReadyQueueToDiskQueue(int pid, int diskId) {}
 
-    private void reevalauteReadyQueue() {}
+    private void reevalauteReadyQueue() {
+        if (readyQueue.size() == 0) return;
+        else {
+            int oldaActivePid = cpu.getActivePid();
+            int activeProcessPriority = processTable.get(oldaActivePid).getPriority();
+            int newActivePid = -1;
 
+            for(int p: readyQueue) {
+                if (processTable.get(p).getPriority() > activeProcessPriority) newActivePid = p;
+            }
+
+            if(newActivePid >= 0 && newActivePid != oldaActivePid) moveProcessFromCPUToQueue(newActivePid, oldaActivePid);
+        }
+    }
+
+    private void moveProcessFromCPUToQueue(int newActivePid, int oldActivePid) {
+        cpu.setActivePid(newActivePid);
+        setProcessState(newActivePid, "RUNNING");
+
+        readyQueue.add(oldActivePid);
+        setProcessState(oldActivePid, "READY");
+    }
+
+    private void setProcessState(int pid, String state) {
+        processTable.get(pid).setState(state);
+    }
     private void addProcessToMem(Process process) {
         ram.addProcess(process);
     }
