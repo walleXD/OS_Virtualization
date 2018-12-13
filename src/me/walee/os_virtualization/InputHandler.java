@@ -43,7 +43,7 @@ public class InputHandler {
             case "help": helpCommand(); break;
             case "exit": exitCommand(); break;
             case "A": createProcessCommand(input); break;
-            case "t": terminateCurrentProcessCommand(input); break;
+            case "t": terminateCurrentProcessCommand(); break;
             case "d": requestDiskReadCommand(input); break;
             case "D": completeDiskActivityCommand(input); break;
             case "Sr": displayRunningProcessCommand(); break;
@@ -87,7 +87,9 @@ public class InputHandler {
                         + " Priority " + newProcess.getPcb().getPriority());
     }
 
-    private void terminateCurrentProcessCommand(String[] input) {}
+    private void terminateCurrentProcessCommand() {
+        virtualOS.terminateCurrentProccess();
+    }
 
     private void requestDiskReadCommand(String[] input) {}
 

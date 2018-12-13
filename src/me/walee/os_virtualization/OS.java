@@ -49,6 +49,12 @@ public class OS {
         reevalauteReadyQueue();
     }
 
+    public void terminateCurrentProccess() {
+        int pid = cpu.getActivePid();
+        PCB activeProcess = processTable.get(pid);
+        activeProcess.setState("TERMINATED");
+        reevalauteReadyQueue();
+    }
 
     private Integer lastPID = 0;
     private CPU cpu = new CPU();
