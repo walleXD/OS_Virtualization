@@ -124,6 +124,7 @@ public class InputHandler {
 
         int prevBlockAddress = 0;
         int blockIndex = 0;
+        System.out.println("#  | PID | RAM Range");
         for(Memory.MemoryBlock block : ram) {
             Integer processPid = block.getContent();
             if (processPid != null) {
@@ -131,18 +132,18 @@ public class InputHandler {
                         blockIndex + "  |  "
                                 + processPid + "  |  "
                                 + prevBlockAddress + " - "
-                                + (prevBlockAddress + block.size())
+                                + (prevBlockAddress + block.size() -1)
                 );
             } else {
                 System.out.println(
                         blockIndex + "  |  "
                                 + 0 + "  |  "
                                 + prevBlockAddress + " - "
-                                + (prevBlockAddress + block.size())
+                                + (prevBlockAddress + block.size() -1)
                 );
             }
 
-            prevBlockAddress += block.size() + 1;
+            prevBlockAddress += block.size();
             blockIndex += 1;
         }
     }
