@@ -59,6 +59,7 @@ public class OS {
         reevalauteReadyQueue();
     }
 
+    private CPU cpu = new CPU();
     private void moveProcessFromReadyQueueToDiskQueue(int pid, int diskId) {}
 
     private void reevalauteReadyQueue() {}
