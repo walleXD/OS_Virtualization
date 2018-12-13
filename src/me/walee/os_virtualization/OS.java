@@ -4,9 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.ArrayList;
 import java.util.List;
+import java.lang.RuntimeException;
 
 public class OS {
-    private Integer diskCount;
     private Integer lastPID = 0;
 
     public Memory getRam() {
@@ -21,11 +21,19 @@ public class OS {
 
     private Map<Integer, PCB> processTable = new HashMap<>();
 
-    private List<Disk> allDisks = new ArrayList<Disk>();
+    public Disk getDisk(int id) {
+        for(Disk d : allDisks) {
+            if (d.getDiskId() == id) return d;
+        }
+
+        throw new RuntimeException("No Disk with id " + id + " found.");
+    };
+
+    private List<Disk> allDisks = new ArrayList<>();
+    private List<Integer> readyQueue = new ArrayList<>();
 
 
     public OS(Integer ramSize, Integer disk) {
-        this.diskCount = disk;
         this.ram = new Memory(ramSize);
         createAllDisks(disk);
         // TODO: Add CPU with active process slot
@@ -39,14 +47,19 @@ public class OS {
         Process newProcess = new Process(newPCB);
 
         addProcessToMem(newProcess);
-        addProcessToReadyQueue(newProcess);
+        addProcessToReadyQueue(newProcess.getPcb().getPid());
 
         newProcess.getPcb().setState("READY");
 
         return newProcess;
     }
 
-    private void addProcessToReadyQueue(Process process) {}
+    public void addProcessToReadyQueue(int pid) {
+        readyQueue.add(pid);
+        reevalauteReadyQueue();
+    }
+
+    private void moveProcessFromReadyQueueToDiskQueue(int pid, int diskId) {}
 
     private void reevalauteReadyQueue() {}
 
