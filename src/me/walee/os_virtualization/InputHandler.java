@@ -106,21 +106,19 @@ public class InputHandler {
     }
 
     private void displayRunningProcessCommand() {
-        Set<PCB> allProcessPCB = virtualOS
+        System.out.println("  PID  |  PRIORITY  ");
+        System.out.println("-------|------------");
+
+        virtualOS
                 .getProcessTable()
                 .entrySet()
                 .stream()
                 .map(e -> e.getValue())
                 .filter(e -> e.getState() == "RUNNING" || e.getState() == "READY")
-                .collect(Collectors.toSet());
-
-        System.out.println("  PID  |  PRIORITY  ");
-        System.out.println("-------|------------");
-
-        for(PCB pcb : allProcessPCB) {
-            System.out.print(pcb.getState() == "RUNNING" ? "> " : "  ");
-            System.out.println(pcb.getPid() + "    |  " + pcb.getPriority());
-        }
+                .forEach(e -> {
+                    System.out.print(e.getState() == "RUNNING" ? "> " : "  ");
+                    System.out.println(e.getPid() + "    |  " + e.getPriority());
+                });
     }
 
     private void displayProcessDiskUsageCommand() {
@@ -129,20 +127,19 @@ public class InputHandler {
                 .stream()
                 .filter(e -> e.getActivePid() > 0)
                 .forEach(e -> {
-                    System.out.println("Disk# " + e.getDiskId());
-                    System.out.println("======");
-
-                    System.out.println("PID | Filename");
-                    System.out.println("---------------");
+                    System.out.println("Disk   |  PID  |  Filename");
+                    System.out.println("-------|-------|----------");
+                    System.out.print(e.getDiskId());
                     printDiskActivity(e.getActivePid(), e.getFile());
                     e.getIoQueue().forEach((pid, file) -> {
+                        System.out.print(e.getDiskId());
                         printDiskActivity(pid, file);
                     });
                 });
     }
 
     private void printDiskActivity(Integer pid, String filename) {
-        System.out.println(pid + "   | " + filename);
+        System.out.println("      |  " + pid + "    | " + filename);
     }
 
     private void displayMemoryCommand() {
@@ -151,7 +148,7 @@ public class InputHandler {
         int prevBlockAddress = 0;
         int blockIndex = 0;
         System.out.println("#  | PID |  RAM Range");
-        System.out.println("===|=====|=============");
+        System.out.println("===|=====|================");
         for(Memory.MemoryBlock block : ram) {
             Integer processPid = block.getContent();
             if (processPid != null) {
