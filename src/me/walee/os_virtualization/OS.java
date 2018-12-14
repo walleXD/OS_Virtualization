@@ -51,10 +51,11 @@ public class OS {
 
         if(activePid >= 0) {
             readyQueue.add(pid);
+            setProcessState(pid, "READY");
             reevalauteReadyQueue();
         } else {
             cpu.setActivePid(pid);
-            processTable.get(pid).setState("RUNNING");
+            setProcessState(pid, "RUNNING");
         }
     }
 
@@ -81,6 +82,11 @@ public class OS {
 
     public List<Disk> getAllDisks() {
         return allDisks;
+    }
+
+    public void completeDiskUsage(int i) {
+        int pid = getDisk(i).completeRunningProcess();
+        addProcessToReadyQueue(pid);
     }
 
     private Integer lastPID = 0;

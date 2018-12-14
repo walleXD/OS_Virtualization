@@ -102,9 +102,7 @@ public class InputHandler {
     private void completeDiskActivityCommand(String[] input) {
         Integer diskId = Integer.parseInt(input[1]);
 
-        // ToDo: Move process migration from i/o to ready queue to OS
-        int pid = virtualOS.getDisk(diskId).completeRunningProcess();
-        virtualOS.addProcessToReadyQueue(pid);
+        virtualOS.completeDiskUsage(diskId);
     }
 
     private void displayRunningProcessCommand() {
