@@ -80,6 +80,7 @@ public class InputHandler {
         Integer memSize = Integer.parseInt(input[2]);
 
         // TODO: add try/catch block for failures
+        // TODO: Track available ram to ensure we aren't creating process with memory overflow
         Process newProcess = virtualOS.createProcess(priority, memSize);
         System.out.println(
                 "Spawned new Process with PID: " + newProcess.getPcb().getPid()
@@ -124,14 +125,35 @@ public class InputHandler {
         }
     }
 
-    private void displayProcessDiskUsageCommand() {}
+    private void displayProcessDiskUsageCommand() {
+        virtualOS
+                .getAllDisks()
+                .stream()
+                .filter(e -> e.getActivePid() > 0)
+                .forEach(e -> {
+                    System.out.println("Disk# " + e.getDiskId());
+                    System.out.println("======");
+
+                    System.out.println("PID | Filename");
+                    System.out.println("---------------");
+                    printDiskActivity(e.getActivePid(), e.getFile());
+                    e.getIoQueue().forEach((pid, file) -> {
+                        printDiskActivity(pid, file);
+                    });
+                });
+    }
+
+    private void printDiskActivity(Integer pid, String filename) {
+        System.out.println(pid + "   | " + filename);
+    }
 
     private void displayMemoryCommand() {
         List<Memory.MemoryBlock> ram = virtualOS.getRam().getRawRam();
 
         int prevBlockAddress = 0;
         int blockIndex = 0;
-        System.out.println("#  | PID | RAM Range");
+        System.out.println("#  | PID |  RAM Range");
+        System.out.println("===|=====|=============");
         for(Memory.MemoryBlock block : ram) {
             Integer processPid = block.getContent();
             if (processPid != null) {

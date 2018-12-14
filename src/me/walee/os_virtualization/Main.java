@@ -6,3 +6,5 @@ public class Main {
         inputHandler.start();
     }
 }
+
+// TODO: Catch running out of threads when trying to retrieve files.
