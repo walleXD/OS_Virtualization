@@ -26,9 +26,6 @@ public class OS {
     public OS(Integer ramSize, Integer disk) {
         this.ram = new Memory(ramSize);
         createAllDisks(disk);
-        // TODO: Add CPU with active process slot
-        // TODO: Add Ready Queue
-        // TODO: Add I/O Queue in each disk
     }
 
     public Process createProcess(Integer priority, Integer memSize) {
