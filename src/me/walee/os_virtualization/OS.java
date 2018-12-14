@@ -68,14 +68,28 @@ public class OS {
         reevalauteReadyQueue();
     }
 
+    public void readFileFromDisk(Integer id, String filename) {
+        Disk currDisk = getDisk(id);
+        currDisk.addProcess(cpu.getActivePid(), filename);
+
+        setProcessState(cpu.getActivePid(), "WAITING");
+
+        cpu.setActivePid(-1);
+
+        reevalauteReadyQueue();
+    }
+
+    public List<Disk> getAllDisks() {
+        return allDisks;
+    }
+
     private Integer lastPID = 0;
     private CPU cpu = new CPU();
     private Map<Integer, PCB> processTable = new HashMap<>();
     private Memory ram;
+
     private List<Disk> allDisks = new ArrayList<>();
     private List<Integer> readyQueue = new ArrayList<>();
-
-    private void moveProcessFromReadyQueueToDiskQueue(int pid, int diskId) {}
 
     private void reevalauteReadyQueue() {
         if (readyQueue.size() == 0) return;

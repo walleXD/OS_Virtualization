@@ -91,7 +91,12 @@ public class InputHandler {
         virtualOS.terminateCurrentProccess();
     }
 
-    private void requestDiskReadCommand(String[] input) {}
+    private void requestDiskReadCommand(String[] input) {
+        Integer diskId = Integer.parseInt(input[1]);
+        String filename = input[2];
+
+        virtualOS.readFileFromDisk(diskId, filename);
+    }
 
     private void completeDiskActivityCommand(String[] input) {
         Integer diskId = Integer.parseInt(input[1]);
