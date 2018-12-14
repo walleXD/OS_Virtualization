@@ -62,6 +62,9 @@ public class OS {
         int pid = cpu.getActivePid();
         PCB activeProcess = processTable.get(pid);
         activeProcess.setState("TERMINATED");
+
+        cpu.setActivePid(-1);
+
         reevalauteReadyQueue();
     }
 
@@ -76,6 +79,18 @@ public class OS {
 
     private void reevalauteReadyQueue() {
         if (readyQueue.size() == 0) return;
+        else if (cpu.getActivePid() == -1) {
+            PCB highPriorityPCB = readyQueue
+                    .stream()
+                    .map(pid -> processTable.get(pid))
+                    .reduce((PCB prev, PCB next) ->
+                            prev.getPriority() > next.getPriority()
+                                ? prev
+                                : next
+                    ).get();
+
+            setNewActiveProcess(highPriorityPCB.getPid());
+        }
         else {
             int oldaActivePid = cpu.getActivePid();
             int activeProcessPriority = processTable.get(oldaActivePid).getPriority();
@@ -85,13 +100,18 @@ public class OS {
                 if (processTable.get(p).getPriority() > activeProcessPriority) newActivePid = p;
             }
 
-            if(newActivePid >= 0 && newActivePid != oldaActivePid) moveProcessFromCPUToQueue(newActivePid, oldaActivePid);
+            if(newActivePid >= 0 && newActivePid != oldaActivePid) setNewActiveProcess(newActivePid, oldaActivePid);
         }
     }
 
-    private void moveProcessFromCPUToQueue(int newActivePid, int oldActivePid) {
+    private void setNewActiveProcess(Integer newActivePid) {
         cpu.setActivePid(newActivePid);
+        readyQueue.remove(readyQueue.indexOf(newActivePid));
         setProcessState(newActivePid, "RUNNING");
+    }
+
+    private void setNewActiveProcess(Integer newActivePid, Integer oldActivePid) {
+        setNewActiveProcess(newActivePid);
 
         readyQueue.add(oldActivePid);
         setProcessState(oldActivePid, "READY");
