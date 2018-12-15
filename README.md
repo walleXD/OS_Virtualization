@@ -31,4 +31,4 @@ exit: Exits Virtualization
 - [ ] Track ram size, process creation & usage to avoid overflow
 - [ ] Add support for Maven
 - [ ] Add more color to outputs
-- [ ] Prevent file retire when there's no `RUNNING` process
+- [ ] Prevent file retrieval when there's no `RUNNING` process
