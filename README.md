@@ -23,12 +23,3 @@ Sm: Shows the state of memory
 help: Lists all available commands
 exit: Exits Virtualization
 ```
-
-#### ToDos
-
-- [ ] Add java doc for how the program works
-- [ ] Add better error handling for wrong command inputs
-- [ ] Track ram size, process creation & usage to avoid overflow
-- [ ] Add support for Maven
-- [ ] Add more color to outputs
-- [ ] Prevent file retrieval when there's no `RUNNING` process
