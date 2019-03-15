@@ -1,6 +1,4 @@
-# OS Virtualization
-## Walee Ahmed
-### CSCI340
+# vOS
 
 #### Command to compile & run
 
